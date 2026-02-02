@@ -64,7 +64,9 @@ public class IsbnService {
         int sum = 0;
 
         for (int i = 0; i < 13; i++) {
-            int digit = isbn.charAt(i) - '0';
+            char c = isbn.charAt(i);
+            if (!Character.isDigit(c)) return false;
+            int digit = c - '0';
             sum += (i % 2 == 0) ? digit : digit * 3;
         }
 
