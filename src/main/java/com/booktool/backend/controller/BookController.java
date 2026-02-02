@@ -2,8 +2,6 @@ package com.booktool.backend.controller;
 
 
 import com.booktool.backend.domain.Book;
-import com.booktool.backend.domain.Category;
-import com.booktool.backend.domain.Language;
 import com.booktool.backend.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

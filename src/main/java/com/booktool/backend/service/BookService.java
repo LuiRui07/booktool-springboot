@@ -2,19 +2,14 @@ package com.booktool.backend.service;
 
 
 import com.booktool.backend.domain.Book;
-import com.booktool.backend.domain.Language;
 import com.booktool.backend.domain.compensation.CompensationCalculator;
 import com.booktool.backend.domain.isbn.IsbnService;
 import com.booktool.backend.repository.BookRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class BookService {
-
-    private int BASE_PRICE = 100;
 
     private final BookRepository bookRepository;
     private final IsbnService isbnService;
