@@ -17,6 +17,7 @@ import java.util.regex.Pattern;
 public class BookEnrichmentService {
 
     private final BookRepository bookRepository;
+    private final EnrichmentStatusService statusService;
     private final OpenLibraryClient openLibraryClient;
     private final CompensationCalculator calculator;
     private final IsbnService isbnService;
@@ -27,15 +28,18 @@ public class BookEnrichmentService {
             BookRepository bookRepository,
             OpenLibraryClient openLibraryClient,
             CompensationCalculator calculator,
-            IsbnService isbnService
+            IsbnService isbnService,
+            EnrichmentStatusService statusService
     ) {
         this.bookRepository = bookRepository;
         this.openLibraryClient = openLibraryClient;
         this.calculator = calculator;
         this.isbnService = isbnService;
+        this.statusService = statusService;
     }
 
     public void enrichBooks() {
+        boolean anyChange = false;
         List<Book> books = bookRepository.findAll();
 
         for (Book book : books) {
@@ -78,9 +82,14 @@ public class BookEnrichmentService {
             }
 
             if (recalculate){
+                anyChange = true;
                 book.setCompensation(calculator.calculate(book));
                 bookRepository.save(book);
             }
+        }
+
+        if (anyChange) {
+            statusService.markEnriched();
         }
     }
 
