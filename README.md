@@ -1,9 +1,3 @@
-Perfect — here’s a clear, actionable README/guide to run the project locally, intended for someone who clones the repo for the first time (and also for you in 3 months 😄).
-
-You can copy & paste this directly into your README.md.
-
-—
-
 📚 Book Tool – Backend (Spring Boot)
 
 Backend for the Book Tool project, built with Spring Boot, MySQL, and Docker, with integration to the public OpenLibrary API to enrich book data.
@@ -13,7 +7,7 @@ Backend for the Book Tool project, built with Spring Boot, MySQL, and Docker, wi
 🧰 Technologies
 
 - Java 17
-- Spring Boot 3.x
+- Spring Boot 3
 - Spring Data JPA (Hibernate)
 - MySQL 8
 - Docker & Docker Compose
@@ -194,22 +188,3 @@ target/site/jacoco/index.html
 - Languages and categories are managed via enums
 - Compensation is calculated using decoupled domain logic
 - The backend is ready to be containerized for deployment
-
-—
-
-🚀 Possible next steps
-
-- Deploy to cloud (Render / Railway / Fly.io)
-- Dashboard to visualize compensations
-- Add authentication
-- End-to-end testing with Cypress (frontend)
-
-—
-
-If you want, in the next message I can:
-
-- Adapt the README for deployment on Render
-- Create a shorter version (for academic submissions)
-- Add request examples (Postman / curl)
-
-Your call 💪

@@ -2,7 +2,7 @@ package com.booktool.backend.domain;
 
 public enum Language {
 
-    ES("Español"),
+    ES("Spanish"),
     EN("English"),
     DE("Deutsch"),
     UNKNOWN("Unknown");
