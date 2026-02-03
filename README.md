@@ -20,17 +20,51 @@ Backend for the Book Tool project, built with Spring Boot, MySQL, and Docker, wi
 
 src
 └── main
-├── java/com.booktool.backend
-│ ├── controller # REST controllers
-│ ├── service # Application services
-│ ├── domain # Entities and domain logic
-│ ├── repository # JPA repositories
-│ ├── integration # External clients (OpenLibrary)
-│ ├── job # Scheduled jobs
-│ ├── config # Spring configuration
-│ └── exception # Global error handling
+├── java
+│   └── com.booktool.backend
+│       ├── api
+│       │   └── dto              # API-facing DTOs (REST contracts)
+│       │       ├── EnrichmentStatusDto
+│       │       └── EnumDTO
+│       │
+│       ├── config               # Spring configuration (beans, clients, etc.)
+│       │   └── RestTemplateConfig
+│       │
+│       ├── controller           # REST controllers (HTTP layer)
+│       │   ├── BookController
+│       │   ├── EnrichmentController
+│       │   └── EnumController
+│       │
+│       ├── domain               # Core domain model and business concepts
+│       │   ├── compensation     # Compensation-related domain logic
+│       │   ├── isbn             # ISBN-related domain logic
+│       │   ├── Book             # Book domain entity
+│       │   ├── Category         # Book category enum
+│       │   └── Language         # Language enum
+│       │
+│       ├── exception            # Global error handling
+│       │   ├── ApiError
+│       │   └── GlobalExceptionHandler
+│       │
+│       ├── integration
+│       │   └── openlibrary      # OpenLibrary external integration
+│       │       ├── OpenLibraryClient
+│       │       └── OpenLibraryEditionDTO
+│       │
+│       ├── job                  # Scheduled/background jobs
+│       │   └── BookEnrichmentJob
+│       │
+│       ├── repository           # Persistence layer (JPA repositories)
+│       │   └── BookRepository
+│       │
+│       └── service              # Application services (use cases)
+│           ├── BookService
+│           ├── BookEnrichmentService
+│           └── EnrichmentStatusService
+│
 └── resources
-└── application.yml / application.properties
+├── application.yml          # Spring Boot configuration
+└── application.properties  # Alternative configuration format
 
 —
 
@@ -91,7 +125,7 @@ docker compose down
 
 ⚙️ Application configuration
 
-In `src/main/resources/application.yml` (or `.properties`):
+In `src/main/resources/application.yml`
 
 ```
 spring:
@@ -108,6 +142,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
+```
+
+In `src/main/resources/application.properties`
+
+```
+spring.datasource.url=jdbc:mysql://localhost:3306/books?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+spring.datasource.username=books
+spring.datasource.password=books
+spring.jpa.hibernate.ddl-auto=update
 ```
 
 —
