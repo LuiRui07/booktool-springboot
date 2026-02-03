@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 @Service
 public class BookEnrichmentService {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BookEnrichmentService.class);
     private final BookRepository bookRepository;
     private final EnrichmentStatusService statusService;
     private final OpenLibraryClient openLibraryClient;
@@ -85,11 +86,15 @@ public class BookEnrichmentService {
                 anyChange = true;
                 book.setCompensation(calculator.calculate(book));
                 bookRepository.save(book);
+                log.info("Enrichment process finished, changes detected");
             }
         }
 
         if (anyChange) {
             statusService.markEnriched();
+            log.info("Enrichment status timestamp updated");
+        } else {
+            log.info("Enrichment finished with no changes");
         }
     }
 

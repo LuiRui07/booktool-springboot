@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class BookService {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BookService.class);
     private final BookRepository bookRepository;
     private final IsbnService isbnService;
     private final CompensationCalculator calculator;
@@ -47,6 +48,11 @@ public class BookService {
         book.setIsbn(normalizedIsbn);
         book.setCompensation(calculator.calculate(book));
 
+        log.info(
+                "Book created isbn={} title='{}'",
+                book.getIsbn(),
+                book.getTitle()
+        );
         return bookRepository.save(book);
     }
 

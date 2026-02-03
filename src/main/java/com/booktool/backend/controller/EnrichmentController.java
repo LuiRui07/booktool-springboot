@@ -1,5 +1,7 @@
 package com.booktool.backend.controller;
 
+import com.booktool.backend.api.dto.EnrichmentStatusDto;
+import com.booktool.backend.service.BookEnrichmentService;
 import com.booktool.backend.service.EnrichmentStatusService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +23,9 @@ public class EnrichmentController {
     }
 
     @GetMapping("/status")
-    public Map<String, Instant> status() {
-        return Map.of("lastUpdate", statusService.getLastEnrichment());
+    public EnrichmentStatusDto status() {
+        return new EnrichmentStatusDto(
+                statusService.getLastEnrichment()
+        );
     }
 }

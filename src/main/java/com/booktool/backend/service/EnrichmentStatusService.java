@@ -7,6 +7,7 @@ import java.time.Instant;
 @Service
 public class EnrichmentStatusService {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EnrichmentStatusService.class);
     private volatile Instant lastEnrichment;
 
     public void markEnriched() {
@@ -14,6 +15,7 @@ public class EnrichmentStatusService {
     }
 
     public Instant getLastEnrichment() {
+        log.info("Enrichment status requested, lastUpdate={}", lastEnrichment);
         return lastEnrichment;
     }
 }
