@@ -4,7 +4,7 @@ public enum Language {
 
     ES("Spanish"),
     EN("English"),
-    DE("Deutsch"),
+    DE("German"),
     UNKNOWN("Unknown");
 
     private final String label;
