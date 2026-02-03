@@ -91,16 +91,23 @@ docker compose down
 
 ⚙️ Application configuration
 
-In `src/main/resources/application.properties` (or `.yml`):
+In `src/main/resources/application.yml` (or `.properties`):
 
 ```
-spring.datasource.url=jdbc:mysql://localhost:3306/book_tool
-spring.datasource.username=books
-spring.datasource.password=books
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/books
+    username: books
+    password: books
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.open-in-view=false
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
 ```
 
 —
@@ -138,23 +145,23 @@ http://localhost:8080
 Examples:
 
 - Get books:
-
 ```
 GET http://localhost:8080/api/books
 ```
-
 - Create a book:
-
 ```
 POST http://localhost:8080/api/books
 ```
-
-—
+- Get enrichment status:
+```
+GET http://localhost:8080/api/enrichment/status```
+```
 
 🔁 Automatic book enrichment
 
 The system includes a scheduled job that:
 
+- Runs periodically using Spring `@Scheduled`
 - Queries OpenLibrary by ISBN
 - Automatically fills in:
   - Year
@@ -164,7 +171,25 @@ The system includes a scheduled job that:
   - Link to OpenLibrary
 - Recalculates compensation if data changes
 
-The job runs periodically in the background.
+Enrichment runs asynchronously on a dedicated scheduler thread and does not block HTTP requests.
+
+—
+
+📊 Logging
+
+The backend uses SLF4J + Logback.
+
+Key events are logged, including:
+
+- Application startup
+- Book creation
+- Enrichment runs
+- Data changes detected during enrichment
+- Enrichment status updates
+
+Logs clearly distinguish between:
+- HTTP request threads
+- Background scheduler threads
 
 —
 
@@ -184,7 +209,8 @@ target/site/jacoco/index.html
 
 🧠 Important notes
 
-- ISBN is normalized automatically
+- ISBN is normalized automatically before processing
 - Languages and categories are managed via enums
 - Compensation is calculated using decoupled domain logic
+- Schema updates are handled automatically via Hibernate
 - The backend is ready to be containerized for deployment
