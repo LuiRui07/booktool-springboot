@@ -34,8 +34,13 @@ class BookEnrichmentServiceTest {
 	@Mock
 	private com.booktool.backend.domain.isbn.IsbnService isbnService;
 
+	@Mock
+	private EnrichmentStatusService statusService;
+
 	@InjectMocks
 	private BookEnrichmentService service;
+
+
 
 	@Test
 	void enrichBooks_enrichesAndSaves() {
@@ -70,6 +75,7 @@ class BookEnrichmentServiceTest {
 
 		verify(calculator).calculate(book);
 		verify(bookRepository).save(book);
+		verify(statusService).markEnriched();
 
 		assertEquals(150, book.getPages());
 		assertEquals(1985, book.getYear());
