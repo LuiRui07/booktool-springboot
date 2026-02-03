@@ -25,8 +25,6 @@ public class BookService {
 
     public Book create(Book book) {
 
-        System.out.println("Creating ..." + book.toString());
-
         if (book.getTitle() == null || book.getTitle().isBlank()) {
             throw new IllegalStateException("Title is required");
         }
